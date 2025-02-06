@@ -1,0 +1,6 @@
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/i2x/vue-frontend
+[submodule "backend"]
+	path = backend
+	url = https://github.com/i2x/django-backend
