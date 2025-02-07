@@ -7,7 +7,7 @@ init:
 update:
 	git submodule update --remote --merge
 
-# Install dependencies for frontend (Vue 3 + Vite)
+# Install dependencies for frontend (Vue.js)
 install-frontend:
 	cd frontend && npm install
 
@@ -18,14 +18,13 @@ install-backend:
 # Install both frontend and backend
 install: install-frontend install-backend
 
-# Start frontend server (Vite + Vue 3)
+# Start frontend server
 start-frontend:
 	cd frontend && npm run dev
 
-# Start backend server (Django)
+# Start backend server
 start-backend:
 	cd backend && source venv/bin/activate && python manage.py runserver
 
 # Start both frontend and backend
-start: 
-	$(MAKE) -j2 start-frontend start-backend
+start: start-frontend start-backend
