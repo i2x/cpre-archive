@@ -38,8 +38,7 @@ ifeq ($(OS), Windows)
 	cd backend && venv\Scripts\python manage.py loaddata data.json
 else
 	cd backend && python3 -m venv venv && source venv/bin/activate && \
-	pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate
-	python manage.py loaddata data.json
+	pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata data.json
 endif
 
 # Install both frontend and backend
