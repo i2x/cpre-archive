@@ -12,53 +12,45 @@ A full-stack document storage system built with **Django** (backend) and **Vue 3
 
 ## 🚀 Getting Started
 
-### 1️⃣ Clone the Repository
 ```sh
-git clone --recursive https://github.com/yourusername/cpre-archive.git
+# 1️⃣ Clone the Repository
+git clone --recursive https://github.com/i2x/cpre-archive.git
 cd cpre-archive
-```
 
-### 2️⃣ Initialize and Update Submodules
-```sh
+# 2️⃣ Initialize and Update Submodules
 make init
-```
 
-### 3️⃣ Install Dependencies
-```sh
+# 3️⃣ Install Dependencies (Frontend + Backend + Migrations)
 make install
 ```
 
 ## 🔧 Development
 
-### Start Frontend (Vite + Vue 3)
 ```sh
+# Start Frontend (Vite + Vue 3)
 make start-frontend
-```
 
-### Start Backend (Django)
-```sh
+# Start Backend (Django)
 make start-backend
-```
 
-### Start Both (Frontend + Backend)
-```sh
+# Start Both (Frontend + Backend)
 make start
 ```
 
 ## 🛠 Manual Setup (Without Makefile)
 
-### Backend (Django)
 ```sh
+# Backend (Django)
 cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver
-```
 
-### Frontend (Vite + Vue 3)
-```sh
-cd frontend
+# Frontend (Vite + Vue 3)
+cd ../frontend
 npm install
 npm run dev
 ```
