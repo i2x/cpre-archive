@@ -1,11 +1,20 @@
-.PHONY: init update install-frontend install-backend install start-frontend start-backend start-backend-server start
+.PHONY: init update push install-frontend install-backend install start-frontend start-backend start
 
-# Initialize and update submodules
+# Initialize and update submodules, ensuring they are on branch main
 init:
 	git submodule update --init --recursive
+	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 
 update:
-	git submodule update --remote --merge
+	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
+	git add .
+	git commit -m "Update submodules to latest main branch"
+	git push origin main
+
+# Push all submodules and main repo
+push:
+	git submodule foreach --recursive 'git add . && git commit -m "Update submodule" || true && git push origin main'
+	git push origin main
 
 # Install dependencies for frontend (Vue.js)
 install-frontend:
