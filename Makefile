@@ -9,11 +9,12 @@ update:
 
 # Install dependencies for frontend (Vue.js)
 install-frontend:
-	cd frontend && npm install
+	cd frontend && cp -n .env.example .env 2>/dev/null || true && npm install
 
 # Install dependencies for backend (Django) and run migrations
 install-backend:
-	cd backend && python3 -m venv venv && source venv/bin/activate && \
+	cd backend && cp -n .env.example .env 2>/dev/null || true && \
+	python3 -m venv venv && source venv/bin/activate && \
 	pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate
 
 # Install both frontend and backend
