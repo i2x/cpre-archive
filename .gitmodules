@@ -1,6 +1,9 @@
 [submodule "frontend"]
-	path = frontend
-	url = https://github.com/i2x/cpre-archive-frontend
+    path = frontend
+    url = https://github.com/i2x/cpre-archive-frontend
+    branch = main
+
 [submodule "backend"]
-	path = backend
-	url = https://github.com/i2x/cpre-archive-backend
+    path = backend
+    url = https://github.com/i2x/cpre-archive-backend
+    branch = main
