@@ -25,6 +25,8 @@ install-backend:
 	cd backend && cp -n .env.example .env 2>/dev/null || true && \
 	python3 -m venv venv && source venv/bin/activate && \
 	pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate
+	python manage.py loaddata data.json
+
 
 # Install both frontend and backend
 install: install-frontend install-backend
