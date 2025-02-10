@@ -37,7 +37,7 @@ ifeq ($(OS), Windows)
 	cd backend && venv\Scripts\python manage.py migrate
 	cd backend && venv\Scripts\python manage.py loaddata data.json
 else
-	cd backend && python3 -m venv venv && source venv/bin/activate && \
+	cd backend && python3 -m venv venv && . venv/bin/activate && \
 	pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata data.json
 endif
 
@@ -53,7 +53,7 @@ start-backend:
 ifeq ($(OS), Windows)
 	cd backend && call venv\Scripts\activate && venv\Scripts\python manage.py runserver
 else
-	cd backend && source venv/bin/activate && python manage.py runserver
+	cd backend && . venv/bin/activate && python manage.py runserver
 endif
 
 # Start both frontend and backend in parallel
