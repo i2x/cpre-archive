@@ -1,4 +1,4 @@
-.PHONY: init update push install-frontend install-backend install start-frontend start-backend start
+.PHONY: init update push install-frontend install-backend install start-frontend start-backend start test
 
 # Detect OS
 OS := $(shell uname 2>/dev/null || echo Windows)
@@ -63,4 +63,12 @@ ifeq ($(OS), Windows)
 	cmd /C "start cmd /C make start-backend"
 else
 	make start-frontend & make start-backend & wait
+endif
+
+# Run Django tests
+test:
+ifeq ($(OS), Windows)
+	cd backend && call venv\Scripts\activate && venv\Scripts\python manage.py test
+else
+	cd backend && . venv/bin/activate && python manage.py test
 endif
