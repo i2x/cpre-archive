@@ -1,6 +1,6 @@
 # CPRE Archive
 
-A full-stack document storage system built with **Django** (backend) and **Vue 3 + Vite** (frontend).
+A full-stack document storage system built with **Django** (backend) and **Vue 3 + Vite** (frontend). Supports both **native** and **Docker** setups.
 
 ## 📂 Project Structure
 ```
@@ -11,7 +11,7 @@ A full-stack document storage system built with **Django** (backend) and **Vue 3
 ```
 
 ## 🚀 Getting Started
-
+### 🔧 Native Setup
 ```sh
 # 1️⃣ Clone the Repository
 git clone --recursive https://github.com/i2x/cpre-archive.git
@@ -24,57 +24,103 @@ make init
 make install
 ```
 
-## 🔧 Development
-
+### 🔥 Start Development (Native)
 ```sh
-# Start Both (Frontend + Backend)
-make start
-
 # Start Frontend (Vite + Vue 3)
 make start-frontend
 
 # Start Backend (Django)
 make start-backend
 
+# Start Both (Frontend + Backend)
+make start
 ```
 
-## 🧪 Running Tests
-
-Run Django unit tests inside the virtual environment:
-
+### 🛠 Manual Setup (Without Makefile)
 ```sh
-make test
-```
-
-## 🛠 Manual Setup (Without Makefile)
-
-If you prefer to set up everything manually, follow these steps:
-
-### Backend (Django)
-```sh
+# Backend (Django)
 cd backend
 python3 -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
-python manage.py loaddata data.json
 python manage.py runserver
-```
 
-### Frontend (Vue 3 + Vite)
-```sh
-cd frontend
-cp .env.example .env  # On Windows: copy .env.example .env
+# Frontend (Vite + Vue 3)
+cd ../frontend
 npm install
 npm run dev
 ```
 
-### Running Django Tests Manually
+---
+
+## 🐳 Docker Setup
+### 🔧 Development Mode
 ```sh
-cd backend
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-python manage.py test
+# 1️⃣ Start in Development Mode
+docker-compose --profile dev up -d
+```
+
+### 🚀 Production Mode
+```sh
+# 1️⃣ Start in Production Mode
+docker-compose --profile prod up -d
+```
+
+### 📌 Docker Commands
+```sh
+# Stop running containers
+docker-compose down
+
+# Stop and remove containers, networks, and volumes
+docker-compose down -v
+
+# Restart the containers (default: dev mode)
+make restart-dev
+make restart-prod
+
+# View running containers
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+
+# View logs for a specific service (e.g., backend-dev)
+make logs-service service=backend-dev
+
+# Execute a command inside a running container (e.g., ls -l)
+make exec service=backend-dev cmd="ls -l"
+
+# Build images without cache
+docker-compose build --no-cache
+
+# Build and restart containers
+make rebuild-dev
+make rebuild-prod
+```
+
+### 🛠 Django Management via Docker
+```sh
+# Run Django commands (e.g., migrate)
+make django-manage cmd="migrate"
+
+# Open Django shell
+make django-shell
+```
+
+### 🗄 Database Access
+```sh
+# Open MySQL shell
+docker exec -it mysql mysql -u root -p
+```
+
+### ⚠️ Cleanup
+```sh
+# Remove all Docker-related data (⚠️ WARNING: This removes ALL volumes & images)
+docker-compose down -v --remove-orphans
+docker system prune -af
+docker volume prune -f
 ```
 
 ## 📜 License
