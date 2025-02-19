@@ -7,3 +7,6 @@
     path = backend
     url = https://github.com/i2x/cpre-archive-backend
     branch = main
+[submodule "database"]
+	path = database
+	url = https://github.com/i2x/cpre-archive-mysql

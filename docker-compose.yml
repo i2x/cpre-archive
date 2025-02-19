@@ -3,13 +3,12 @@ version: '3.8'
 services:
   # Database (Start First)
   mysql:
-    image: mysql:8.0
+    build:
+      context: ./database
+      dockerfile: Dockerfile.mysql
     container_name: mysql
     restart: always
-    env_file: ./backend/.env
-    environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"  # รหัสผ่าน root
-      MYSQL_DATABASE: "${DATABASE_NAME}"             # ชื่อฐานข้อมูลเริ่มต้น
+    env_file: ./database/.env  # ใช้ .env ของ database
     ports:
       - "3306:3306"
     volumes:
@@ -31,7 +30,8 @@ services:
     restart: always
     env_file: ./backend/.env
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     ports:
       - "8000:8000"
     volumes:
@@ -40,7 +40,6 @@ services:
       - app_network
     profiles:
       - dev
-
 
   # Backend - Production Mode
   backend-prod:
@@ -61,10 +60,6 @@ services:
       - ./backend:/app
     profiles:
       - prod
-
-
-
-
 
   # Frontend - Development Mode
   frontend-dev:
