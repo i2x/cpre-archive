@@ -6,7 +6,7 @@ services:
     image: mysql:8.0
     container_name: mysql
     restart: always
-    env_file: .env
+    env_file: ./backend/.env
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"  # รหัสผ่าน root
       MYSQL_DATABASE: "${DATABASE_NAME}"             # ชื่อฐานข้อมูลเริ่มต้น
@@ -36,16 +36,11 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
-      - /app/__pycache__/  # ยกเว้น cache
     networks:
       - app_network
-    command: >
-      sh -c "until nc -z mysql 3306; do sleep 1; done;
-             python manage.py migrate &&
-             python manage.py loaddata data.json &&
-             python manage.py runserver 0.0.0.0:8000"
     profiles:
       - dev
+
 
   # Backend - Production Mode
   backend-prod:
@@ -64,13 +59,12 @@ services:
       - app_network
     volumes:
       - ./backend:/app
-    command: >
-      sh -c "until nc -z mysql 3306; do sleep 1; done;
-             python manage.py migrate &&
-             python manage.py loaddata data.json &&
-             gunicorn --chdir /app --bind 0.0.0.0:8000 backend.wsgi:application --workers 4 --threads 2 --timeout 120"
     profiles:
       - prod
+
+
+
+
 
   # Frontend - Development Mode
   frontend-dev:
