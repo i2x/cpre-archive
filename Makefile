@@ -5,8 +5,13 @@ init:
 update:
 	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 	git add .
-	git commit -m "Update submodules to latest main branch"
-	git push origin main
+	@if ! git diff --cached --quiet; then \
+		git commit -m "Update submodules to latest main branch"; \
+		git push origin main; \
+	else \
+		echo "No changes to commit."; \
+	fi
+
 
 
 # Project Name
