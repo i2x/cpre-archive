@@ -7,6 +7,7 @@ A full-stack document storage system built with **Django** (backend) and **Vue 3
 📦 cpre-archive
 ├── 📁 frontend   # Vue 3 + Vite frontend
 ├── 📁 backend    # Django backend
+├── 📁 database   # MySQL database setup
 └── 📄 Makefile   # Automation commands
 ```
 
@@ -59,32 +60,34 @@ npm run dev
 ### 🔧 Development Mode
 ```sh
 # 1️⃣ Start in Development Mode
-docker-compose --profile dev up -d
+make dev
 ```
 
 ### 🚀 Production Mode
 ```sh
 # 1️⃣ Start in Production Mode
-docker-compose --profile prod up -d
+make prod
 ```
 
 ### 📌 Docker Commands
 ```sh
 # Stop running containers
-docker-compose down
+make down
 
 # Stop and remove containers, networks, and volumes
-docker-compose down -v
+make reset
 
-# Restart the containers (default: dev mode)
+# Restart the containers in development mode
 make restart-dev
+
+# Restart the containers in production mode
 make restart-prod
 
 # View running containers
-docker-compose ps
+make ps
 
-# View logs
-docker-compose logs -f
+# View logs of all services
+make logs
 
 # View logs for a specific service (e.g., backend-dev)
 make logs-service service=backend-dev
@@ -93,11 +96,19 @@ make logs-service service=backend-dev
 make exec service=backend-dev cmd="ls -l"
 
 # Build images without cache
-docker-compose build --no-cache
+make build
 
-# Build and restart containers
+# Build and restart containers in development mode
 make rebuild-dev
+
+# Build and restart containers in production mode
 make rebuild-prod
+```
+
+### 🛠 Database Setup (MySQL)
+```sh
+# Open MySQL shell
+make mysql
 ```
 
 ### 🛠 Django Management via Docker
@@ -109,18 +120,10 @@ make django-manage cmd="migrate"
 make django-shell
 ```
 
-### 🗄 Database Access
-```sh
-# Open MySQL shell
-docker exec -it mysql mysql -u root -p
-```
-
 ### ⚠️ Cleanup
 ```sh
 # Remove all Docker-related data (⚠️ WARNING: This removes ALL volumes & images)
-docker-compose down -v --remove-orphans
-docker system prune -af
-docker volume prune -f
+make clean
 ```
 
 ## 📜 License
