@@ -2,6 +2,11 @@ init:
 	git submodule update --init --recursive
 	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 
+init-env:
+	cp -n backend/.env.example backend/.env || true
+	cp -n frontend/.env.example frontend/.env || true
+	cp -n database/.env.example database/.env || true
+
 update:
 	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 	git add .
