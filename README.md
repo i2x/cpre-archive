@@ -12,6 +12,21 @@ A full-stack document storage system built with **Django** (backend) and **Vue 3
 ```
 
 ## 🚀 Getting Started
+
+
+### 🔧 TL; DR
+
+```sh
+git clone --recursive https://github.com/i2x/cpre-archive.git
+cd cpre-archive
+make init-env
+make prod
+```
+
+
+
+
+
 ### 🔧 Native Setup
 ```sh
 # 1️⃣ Clone the Repository

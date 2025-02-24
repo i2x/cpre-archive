@@ -1,12 +1,15 @@
+# Initialize submodules and update them to the latest main branch
 init:
 	git submodule update --init --recursive
 	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 
+# Initialize environment files
 init-env:
 	cp -n backend/.env.example backend/.env || true
 	cp -n frontend/.env.example frontend/.env || true
 	cp -n database/.env.example database/.env || true
 
+# Update submodules and commit changes if there are any
 update:
 	git submodule foreach --recursive 'git checkout main || git checkout -b main && git pull origin main'
 	git add .
@@ -16,8 +19,6 @@ update:
 	else \
 		echo "No changes to commit."; \
 	fi
-
-
 
 # Project Name
 PROJECT_NAME=my_project
@@ -35,8 +36,29 @@ down:
 	docker-compose down
 
 # Stop and remove containers, networks, and volumes
-reset:
-	docker-compose down -v
+# Full reset for development: Stop containers, remove volumes, ensure .env files exist, and rebuild everything
+# Full reset for development: Stop containers, remove volumes, ensure .env files exist, and rebuild everything
+reset-dev:
+	docker-compose --profile dev down -v --remove-orphans
+	docker system prune -af
+	docker volume prune -f
+	cp -n backend/.env.example backend/.env || true
+	cp -n frontend/.env.example frontend/.env || true
+	cp -n database/.env.example database/.env || true
+	docker-compose --profile dev build --no-cache  # Force rebuild to apply new .env
+	docker-compose --profile dev up -d
+
+# Full reset for production
+reset-prod:
+	docker-compose --profile prod down -v --remove-orphans
+	docker system prune -af
+	docker volume prune -f
+	cp -n backend/.env.example backend/.env || true
+	cp -n frontend/.env.example frontend/.env || true
+	cp -n database/.env.example database/.env || true
+	docker-compose --profile prod build --no-cache  # Force rebuild to apply new .env
+	docker-compose --profile prod up -d
+
 
 # Restart the containers (default: dev mode)
 restart-dev: down dev
